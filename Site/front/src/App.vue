@@ -7,6 +7,9 @@ import HelloWorld from './components/HelloWorld.vue'
     <div class="app">
       <HelloWorld/>
     </div>
+
+
+    
   <RouterView />
 </template>
 
