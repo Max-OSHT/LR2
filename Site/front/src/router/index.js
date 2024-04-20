@@ -1,22 +1,58 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Home from '../views/Home.vue'
+import InsideLayout from '../views/InsideLayout.vue'
+import InsidePage from '../views/InsidePage.vue'
+import getLog from '@/components/getLog.vue'
+import NotFound from '../views/404.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
-      component: HomeView
+      component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
+      path: '/',
+      redirect: { name: 'home' }
+    },
+    {
+      path: '/inside',
+      name: 'inside',
+      component: InsideLayout,
+      children: [
+        {
+          path: 'info',
+          name: 'info',
+          // component: InsidePage
+        },
+        {
+          path: 'warning',
+          name: 'warning',
+          // component: InsidePage
+        },
+        {
+          path: 'error',
+          name: 'error',
+          // component: InsidePage
+        },
+        {
+          path: 'critical',
+          name: 'critical',
+          component: InsidePage
+        },
+        {
+          path: '*/*',
+          redirect: { name: 'inside' }
+        }
+      ]
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: NotFound
+    },
   ]
 })
 
