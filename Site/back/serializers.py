@@ -5,7 +5,7 @@ from .cipher import *
 class UserSerializer(ModelSerializer):
         class Meta:
                 model = Users
-                fields = ["url", "username", "email", "password", "created_at"]
+                fields = ["id", "url", "username", "email", "password", "created_at"]
                 extra_kwargs = {"password": {"write_only": True}}
 
         def create(self, validated_data):
