@@ -49,7 +49,7 @@ export default {
       if (this.isAuthorized) {
         this.$router.push({ name: 'home' })
       }
-    }
+    },
   }
 }
 </script>
