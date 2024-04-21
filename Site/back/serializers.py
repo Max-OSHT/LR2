@@ -9,7 +9,11 @@ class UserSerializer(ModelSerializer):
                 extra_kwargs = {"password": {"write_only": True}}
 
         def create(self, validated_data):
-                user = Users(username=validated_data["username"])
+                user = Users(
+                       username=validated_data["username"],
+                       email=validated_data['email'],
+                       created_at = validated_data["created_at"]
+                )
                 user.set_password(validated_data["password"])
                 user.save()
                 return user
@@ -21,7 +25,10 @@ class LoggSerializer(ModelSerializer):
             extra_kwargs = {"log": {"write_only": True}}
         
         def create(self, validated_data):
-                log = Logg(id=validated_data["id"])
+                log = Logg(
+                       id=validated_data["id"],
+                       created_at = validated_data["created_at"]
+                )
                 log.entry(validated_data["log"])
                 log.save()
                 return log
