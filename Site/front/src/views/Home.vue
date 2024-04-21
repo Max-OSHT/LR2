@@ -84,21 +84,18 @@ export default {
                         }
                 }
         },
-        setup: () => ({ v$: useVuelidate() }),
-        // validationConfig: {
-        //         $error: true
-        // }
+        setup: () => ({ v$: useVuelidate( ), }),
 }
 </script>
 
 <template>
         <div class="home">
                 <div id="title">Log Profile</div>
-                <form @submit.prevent="">
+                <form  @submit.prevent="">
 
                         <!-- Log in -->
                         <input v-if="mode" type="text" class="form-control" placeholder="Login" v-model.trim="formLog.login">
-                        <p v-if="mode && v$.formLog.login.required.$invalid" class="error">
+                        <p v-if="mode && v$.formLog.login.required.$invalid && v$.formLog.login.$dirty" class="error">
                                 Обязательное поле
                         </p>
                         <p v-if="mode && v$.formLog.login.minLength.$invalid" class="error">
@@ -106,20 +103,20 @@ export default {
                         </p>
 
                         <input v-if="mode" type="password" class="form-control" placeholder="Password" v-model.trim="formLog.password">
-                        <p v-if="mode && v$.formLog.password.required.$invalid" class="error">
+                        <p v-if="mode && v$.formLog.password.required.$invalid && v$.formLog.password.$dirty" class="error">
                                 Обязательное поле
                         </p>
-                        <p v-if="mode && v$.formLog.password.minLength.$invalid" class="error">
+                        <p v-if="mode && v$.formLog.password.minLength.$invalid && v$.formLog.password.$dirty" class="error">
                                 Должно быть не менее 8 символов
                         </p>
-                        <p v-if="mode && v$.formLog.password.containsPasswordRequirement.$invalid" class="error">
-                                Пароль должен содержать заглавные, строчные, цифры и специальные символы
+                        <p v-if="mode && v$.formLog.password.containsPasswordRequirement.$invalid && v$.formLog.password.$dirty" class="error">
+                                Пароль должен содержать <br/> заглавные, строчные, цифры и специальные символы
                         </p>
 
                         <!-- Registration -->
                         <input v-if="!mode" type="text" class="form-control" placeholder="Username" v-model.trim="formReg.username"
-                                @blur="v$.formReg.username.$touch">
-                        <div v-if="!mode && v$.formReg.username.required.$invalid" class="error">
+                                @blur="v$.formReg.username.$touch" >
+                        <div v-if="!mode && v$.formReg.username.required.$invalid && v$.formReg.username.$dirty" class="error">
                                 Обязательное поле
                         </div>
                         <p v-if="!mode && v$.formReg.username.minLength.$invalid" class="error">
@@ -127,7 +124,7 @@ export default {
                         </p>
 
                         <input v-if="!mode" type="text" class="form-control" placeholder="Email" v-model.trim="formReg.email">
-                        <p v-if="!mode && v$.formReg.email.required.$invalid" class="error">
+                        <p v-if="!mode && v$.formReg.email.required.$invalid && v$.formReg.email.$dirty" class="error">
                                 Обязательное поле
                         </p>
                         <p v-if="!mode && v$.formReg.email.email.$invalid" class="error">
@@ -135,18 +132,18 @@ export default {
                         </p>
 
                         <input v-if="!mode" type="password" class="form-control" placeholder="Password" v-model.trim="formReg.password">
-                        <p v-if="!mode && v$.formReg.password.required.$invalid" class="error">
+                        <p v-if="!mode && v$.formReg.password.required.$invalid && v$.formReg.password.$dirty" class="error">
                                 Обязательное поле
                         </p>
-                        <p v-if="!mode && v$.formReg.password.minLength.$invalid" class="error">
+                        <p v-if="!mode && v$.formReg.password.minLength.$invalid && v$.formReg.password.$dirty" class="error">
                                 Должно быть не менее 8 символов
                         </p>
-                        <p v-if="!mode && v$.formReg.password.containsPasswordRequirement.$invalid" class="error">
-                                Пароль должен содержать заглавные, строчные, цифры и специальные символы
+                        <p v-if="!mode && v$.formReg.password.containsPasswordRequirement.$invalid && v$.formReg.password.$dirty" class="error">
+                                Пароль должен содержать <br/> заглавные, строчные, цифры и специальные символы
                         </p>
 
                         <input v-if="!mode" type="password" class="form-control" placeholder="Confirm Password" v-model.trim="formReg.password_confirm">
-                        <p v-if="!mode && v$.formReg.password_confirm.required.$invalid" class="error">
+                        <p v-if="!mode && v$.formReg.password_confirm.required.$invalid && v$.formReg.password_confirm.$dirty" class="error">
                                 Обязательное поле
                         </p>
                         <p v-if="!mode && v$.formReg.password_confirm.sameAsPassword.$invalid" class="error">
@@ -154,13 +151,13 @@ export default {
                         </p>
 
                         <div v-if="mode" class="d-flex justify-content-between">
-                                <div><button type="submit" class="btn btn-outline-light" @click="handleSubmit(mode)">Log
-                                                in</button></div>
-                                <div><button @click="mode = !mode" type="submit" class="btn btn-outline-light">No
-                                                account</button></div>
+                                <div><button type="submit" class="btn btn-outline-light" @click="handleSubmit(mode)">Log in</button></div>
+                                <div><button @click="mode = !mode" type="submit" class="btn btn-outline-light">No account</button></div>
                         </div>
-                        <div v-if="!mode"><button type="submit" class="btn btn-outline-light w-100"
-                                        @click="handleSubmit(mode), mode = !mode">Registration</button></div>
+                        <div v-if="!mode">
+                                <button type="submit" class="btn btn-outline-light w-100" @click="handleSubmit(mode)">Registration</button>
+                                <button type="submit" class="btn btn-outline-light w-100" @click="mode = !mode">Back</button>
+                        </div>
                 </form>
         </div>
         <div class="d-flex justify-content-center">etc. osht</div>
@@ -177,6 +174,7 @@ export default {
 
 form>input,
 button {
+        font-weight: 500;
         margin-bottom: 10px;
         border-width: 3px;
         border-color: rgb(51, 182, 123);
@@ -191,6 +189,7 @@ button {
 }
 
 .error {
+        margin-bottom: 10px;
         font-size: small;
         color: salmon;
 }
