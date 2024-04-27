@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 import Home from '../views/Home.vue'
 import InsideLayout from '../views/InsideLayout.vue'
 import InsidePage from '../views/InsidePage.vue'
@@ -21,6 +22,9 @@ const router = createRouter({
       path: '/inside',
       name: 'inside',
       component: InsideLayout,
+      meta: { 
+        requiresAuth: true
+      },
       children: [
         {
           path: 'info',
@@ -56,4 +60,15 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('home')
+  } else {
+    next()
+  }
+})
 export default router

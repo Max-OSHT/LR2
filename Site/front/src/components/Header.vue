@@ -28,7 +28,7 @@
             <div class="nav-item m-2 px-2">
               <router-link :to="{ name: 'critical' }"> Critical </router-link>
             </div>
-            <button type="button" id="Out" class="btn btn-outline-light" @click="outBtn">Выйти</button>
+            <button v-if="isLoggedIn" type="button" id="Out" class="btn btn-outline-light" @click="logout">Выйти</button>
           </ul>
         </div>
       </div>
@@ -39,17 +39,24 @@
 <script>
 
 export default {
+
   data() {
     return {
       isAuthorized: true
     }
   },
-  methods: {
-    outBtn() {
-      if (this.isAuthorized) {
-        this.$router.push({ name: 'home' })
-      }
-    },
+  computed: {
+    isLoggedIn : function(){ return this.$store.getters.isLoggedIn}  
+  },
+  created() {
+    this.$http.interceptors.response.use(undefined, function (err) {
+      return new Promise((resolve, reject) => {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch('logout')
+        }
+        throw err;
+      });
+    });
   }
 }
 </script>

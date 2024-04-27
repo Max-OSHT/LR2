@@ -1,18 +1,20 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager as AbstractUserManager
 
-# Create your models here.
+# class UserManager(AbstractUserManager):
+#         pass
+
 class Users(AbstractUser):
         id = models.AutoField(primary_key=True)
-        username = models.CharField(max_length=100, null=True)
+        username = models.CharField(max_length=100, null=True, unique=True)
         email = models.CharField(max_length=100, null=True)
         password = models.CharField(max_length=500, null=True)
-        created_at = models.DateTimeField(auto_now_add=True , null=True)
+
+        # objects = UserManager()
 
         class Meta:
-                managed = False
+                managed = True
                 db_table = 'users'
-                ordering = ['created_at']
         
         def __str__(self):
                 return self.username
@@ -23,7 +25,7 @@ class Logg(models.Model):
         created_at = models.DateTimeField(auto_now_add=True , null=True)
 
         class Meta:
-                managed = False
+                managed = True
                 db_table = 'logg'
                 ordering = ['created_at']
 

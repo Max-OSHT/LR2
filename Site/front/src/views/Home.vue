@@ -21,7 +21,6 @@ export default {
                 }
         },
         methods: {
-
                 async handleSubmit(action) {
                         if (action === true) {
                                 const result = await this.v$.formLog.$validate()
@@ -30,8 +29,11 @@ export default {
                                                 login: this.formLog.login,
                                                 password: this.formLog.password
                                         };
-                                        const response = await axios.post('log', data);
-                                        console.log(response);
+                                        // const response = await axios.post('api/login/', data);
+                                        // console.log(response);
+                                        this.$store.dispatch('login', data)
+                                                .then(() => this.$router.push({name:'inside'}))
+                                                .catch(err => console.log(err))
                                 }
                                 else {
                                         console.log("valid not successful")
@@ -47,8 +49,11 @@ export default {
                                                 password: this.formReg.password,
                                                 password_confirm: this.formReg.password_confirm
                                         };
-                                        const response = await axios.post('reg', data);
-                                        console.log(response);
+                                        // const response = await axios.post('api/register/', data);
+                                        // console.log(response);
+                                        this.$store.dispatch('register', data)
+                                        .then(() => this.$router.push({name:'home'}))
+                                        .catch(err => console.log(err))
                                 }
                                 else {
                                         console.log("valid not successful")
