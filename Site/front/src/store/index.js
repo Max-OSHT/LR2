@@ -32,18 +32,19 @@ export default createStore({
                 login({commit}, user){
                         return new Promise((resolve, reject) => {
                                 commit('auth_request')
-                                axios.post('http://localhost:8003login/', JSON.stringify(user))
+                                axios.post('http://localhost:8003/login/', user)
                                 .then(resp => {
                                         const token = resp.data.token
                                         const user = resp.data.user
                                         localStorage.setItem('token', token)
                                         axios.defaults.headers.common['Authorization'] = token
                                         commit('auth_success', token, user)
-                                        console.log('auth_success')
+                                        alert('auth_success')
                                         resolve(resp)
                                 })
                                 .catch(err => { 
                                         commit('auth_error')
+                                        alert('Wrong login or password')
                                         localStorage.removeItem('token')
                                         reject(err)
                                 })
@@ -52,14 +53,14 @@ export default createStore({
                 register({commit}, user){
                         return new Promise((resolve, reject) => {
                                 commit('auth_request')
-                                axios.post('http://localhost:8003/reg/', user)
+                                axios.post('http://localhost:8003/logup/', user)
                                 .then(resp => {
                                         const token = resp.data.token
                                         const user = resp.data.user
                                         localStorage.setItem('token', token)
                                         axios.defaults.headers.common['Authorization'] = token
                                         commit('auth_success', token, user)
-                                        console.log('reg_success')
+                                        alert('reg_success')
                                         resolve(resp)
                                 })
                                 .catch(err => {
@@ -71,10 +72,19 @@ export default createStore({
                 },
                 logout({commit}){
                         return new Promise((resolve, reject) => {
-                                commit('logout')
+                                
                                 localStorage.removeItem('token')
-                                delete axios.defaults.headers.common['Authorization']
-                                resolve()
+                                axios.post('http://localhost:8003/logout/')
+                                .then(resp => {
+                                        resolve(resp)
+                                })
+                                .catch(err => {
+                                        // commit('auth_error', err)
+                                        console.log(err)
+                                        reject(err)
+                                })
+                                // delete axios.defaults.headers.common['Authorization']
+                                // resolve()
                         })
                 }
         }

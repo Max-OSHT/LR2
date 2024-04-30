@@ -1,5 +1,6 @@
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,10 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    # 'rest_framework_jwt',
+    'rest_framework_simplejwt',
     'corsheaders',
-    'back'
+    'back',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +43,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'rest_framework.authentication.TokenAuthentication',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -136,19 +136,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'back.Users'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+    'SIMPLE_JWT': {
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+        'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+        'ROTATE_REFRESH_TOKENS': True,
+    }
 
 }
-
-# from datetime import timedelta
-
-# JWT_AUTH = {
-#     'JWT_ALLOW_REFRESH': True,
-#     'JWT_EXPIRATION_DELTA': timedelta(hours=1),
-#     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
-# }

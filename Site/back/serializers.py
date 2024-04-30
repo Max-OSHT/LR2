@@ -1,4 +1,7 @@
+from django.contrib.auth import get_user_model, password_validation
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
+from rest_framework.authtoken.models import Token 
 from .models import *
 from .cipher import *
 
@@ -8,15 +11,6 @@ class LogUpSerializer(ModelSerializer):
                 fields = ["id", "username", "email", "password"]
                 extra_kwargs = {"password": {"write_only": True}}
         
-        # def create(self, validated_data):
-        #         password = validated_data.pop('password', None)
-        #         instance = self.Meta.model(**validated_data)
-        #         if password is not None:
-        #                 instance.set_password(password)
-        #         instance.save()
-        #         return instance
-        
-
 
 class LogInSerializer(ModelSerializer):
         class Meta:
@@ -24,14 +18,6 @@ class LogInSerializer(ModelSerializer):
                 fields = ["id", "username", "password"]
                 extra_kwargs = {"password": {"write_only": True}}
         
-        # def login(self, validated_data):
-        #         password = validated_data.pop('password', None)
-        #         instance = self.Meta.model(**validated_data)
-        #         if password is not None:
-        #                 instance.set_password(password)
-        #         instance.save()
-        #         return instance
-
 
 class LoggSerializer(ModelSerializer):
         class Meta:
@@ -39,5 +25,7 @@ class LoggSerializer(ModelSerializer):
             fields = ["id", "log", "created_at"]
         #     extra_kwargs = {"log": {"write_only": True}}
 
+class EmptySerializer(ModelSerializer):
+        pass
 
 

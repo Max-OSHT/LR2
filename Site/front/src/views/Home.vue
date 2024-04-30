@@ -32,8 +32,8 @@ export default {
                                         // const response = await axios.post('api/login/', data);
                                         // console.log(response);
                                         this.$store.dispatch('login', data)
-                                                .then(() => this.$router.push({name:'inside'}))
-                                                .catch(err => console.log(err))
+                                        .then(() => this.$router.push({name:'inside'}))
+                                        .catch(err => console.log(err))
                                 }
                                 else {
                                         console.log("valid not successful")
@@ -46,8 +46,7 @@ export default {
                                         const data = {
                                                 username: this.formReg.username,
                                                 email: this.formReg.email,
-                                                password: this.formReg.password,
-                                                password_confirm: this.formReg.password_confirm
+                                                password: this.formReg.password
                                         };
                                         // const response = await axios.post('api/register/', data);
                                         // console.log(response);
@@ -64,22 +63,22 @@ export default {
         validations() {
                 return {
                         formLog: {
-                                login: { required, minLength: minLength(4) },
+                                login: { required, minLength: minLength(3) },
                                 password: { 
                                         required, 
-                                        minLength: minLength(8),
+                                        minLength: minLength(6),
                                         containsPasswordRequirement: helpers.withMessage(
                                                 () => `The password requires an uppercase, lowercase, number and special character`,
-                                                (value) => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/.test(value)
+                                                (value) => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(value)
                                         ),
                                 },
                         },
                         formReg: {
-                                username: { required, minLength: minLength(4) },
+                                username: { required, minLength: minLength(3) },
                                 email: { required, email },
                                 password: { 
                                         required,
-                                        minLength: minLength(8),
+                                        minLength: minLength(6),
                                         containsPasswordRequirement: helpers.withMessage(
                                                 () => `The password requires an uppercase, lowercase, number and special character`,
                                                 (value) => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/.test(value)

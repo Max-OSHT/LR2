@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-sm">
+    <nav class="navbar navbar-expand-sm" @submit.prevent="">
       <div class="container mt-0">
         <div class="align-top" loading="lazy" id="label">
           <router-link :to="{ name: 'inside' }" id="logo"> Log Profile </router-link>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
 
   data() {
@@ -45,14 +45,21 @@ export default {
       isAuthorized: true
     }
   },
+  methods: {
+    async logout() {
+      this.$store.dispatch('logout')
+      .then(() =>{this.$router.push({name:'home'})})
+    }
+  },
   computed: {
     isLoggedIn : function(){ return this.$store.getters.isLoggedIn}  
   },
   created() {
-    this.$http.interceptors.response.use(undefined, function (err) {
+    axios.interceptors.response.use(undefined, function (err) {
       return new Promise((resolve, reject) => {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
           this.$store.dispatch('logout')
+          .then(() =>{this.$router.push({name:'home'})})
         }
         throw err;
       });
