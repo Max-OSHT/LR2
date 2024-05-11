@@ -2,12 +2,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,batch,executable,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,batch,executable,venv
 
-### Batch ###
-# BatchFiles
-*.bat
-*.cmd
-*.btm
-
 ### Executable ###
 *.app
 *.cgi
@@ -18,20 +12,6 @@
 *.pif
 *.vb
 *.wsf
-
-### venv ###
-# Virtualenv
-# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-.Python
-[Bb]in
-[Ii]nclude
-[Ll]ib
-[Ll]ib64
-[Ll]ocal
-[Ss]cripts
-pyvenv.cfg
-.venv
-pip-selfcheck.json
 
 ### VisualStudioCode ###
 .vscode/*

@@ -10,11 +10,9 @@ from rest_framework import status, viewsets
 from django.contrib.auth import authenticate
 
 import jwt, datetime
-   
 # from .permissions import UserPermission
 from back.models import *
 from back.serializers import LogUpSerializer, LogInSerializer, EmptySerializer
-
 
 class ViewSet(viewsets.GenericViewSet):
     permission_classes = [AllowAny,]
