@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token 
 from .models import *
 from .cipher import *
+from django_db_logger.models import StatusLog
 
 class LogUpSerializer(ModelSerializer):
         class Meta:
@@ -21,8 +22,8 @@ class LogInSerializer(ModelSerializer):
 
 class LoggSerializer(ModelSerializer):
         class Meta:
-            model = Logg
-            fields = ["id", "log", "created_at"]
+            model = StatusLog
+            fields = ["id", "data"]
         #     extra_kwargs = {"log": {"write_only": True}}
 
 class EmptySerializer(ModelSerializer):

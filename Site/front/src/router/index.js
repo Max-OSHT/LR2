@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import Home from '../views/Home.vue'
 import InsideLayout from '../views/InsideLayout.vue'
-import InsidePage from '../views/InsidePage.vue'
 import getLog from '@/components/getLog.vue'
 import NotFound from '../views/404.vue'
 
@@ -29,22 +28,18 @@ const router = createRouter({
         {
           path: 'info',
           name: 'info',
-          // component: InsidePage
         },
         {
           path: 'warning',
           name: 'warning',
-          // component: InsidePage
         },
         {
           path: 'error',
           name: 'error',
-          // component: InsidePage
         },
         {
           path: 'critical',
           name: 'critical',
-          component: InsidePage
         },
         {
           path: '*/*',

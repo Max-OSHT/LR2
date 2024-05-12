@@ -1,4 +1,4 @@
-
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -28,10 +28,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'djoser',
     'corsheaders',
     'back',
-    'rest_framework_simplejwt.token_blacklist',
+    'django_db_logger',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,38 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 ROOT_URLCONF = 'Site.urls'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose":{
+            "format": "{asctime} - {levelname} - {module} - {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        # "console": {
+        #     "class": 'logging.StreamHandler',
+        #     "formatter": 'verbose',
+        # },
+        # "file": {
+        #     "class": "logging.FileHandler",
+        #     "filename": "main.log",
+        #     "formatter": "verbose",
+        # },
+        'db_log': {
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["db_log"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
 
 TEMPLATES = [
     {
@@ -136,16 +169,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'back.Users'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
     ],
-    'SIMPLE_JWT': {
-        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-        'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
-        'ROTATE_REFRESH_TOKENS': True,
-    }
+    # 'SIMPLE_JWT': {
+    #     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    #     'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+    #     'ROTATE_REFRESH_TOKENS': True,
+    # }
 
 }

@@ -1,13 +1,14 @@
 <script>
     import Header from './../components/Header.vue'
+    import Log from './../components/getLog.vue'
     export default {
-        components: {Header}, 
+        components: {Header, Log}, 
     }
 </script>
 
 <template>
     <Header/>
-    <h2>Полученные логи</h2>
+    <Log/>
     <RouterView/>
 </template>
       

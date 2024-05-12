@@ -4,4 +4,3 @@ from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 admin.site.register(Users, UserAdmin)
-admin.site.register(Logg)

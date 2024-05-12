@@ -26,11 +26,9 @@ export default {
                                 const result = await this.v$.formLog.$validate()
                                 if (result) {
                                         const data = {
-                                                login: this.formLog.login,
+                                                username: this.formLog.login,
                                                 password: this.formLog.password
                                         };
-                                        // const response = await axios.post('api/login/', data);
-                                        // console.log(response);
                                         this.$store.dispatch('login', data)
                                         .then(() => this.$router.push({name:'inside'}))
                                         .catch(err => console.log(err))
@@ -48,8 +46,6 @@ export default {
                                                 email: this.formReg.email,
                                                 password: this.formReg.password
                                         };
-                                        // const response = await axios.post('api/register/', data);
-                                        // console.log(response);
                                         this.$store.dispatch('register', data)
                                         .then(() => this.$router.push({name:'home'}))
                                         .catch(err => console.log(err))
